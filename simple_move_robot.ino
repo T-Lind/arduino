@@ -13,11 +13,11 @@ int pus(double power){
 }
 
 int conversion(double power){
-  double pus = 0;//create variable pulse, in microseconds(us)
+  double pius = 0;//create variable pulse, in microseconds(us)
   int pticks = 0;//create pticks variable, in ticks out of 4096.
-  pus = pus(power);//use the pus function to find the proportial pulse length in us from a percent
-  phz = 1000000/pus//convert to hertz
-  pticks = int((4096*phz)/1600)//convert hertz to ticks
+  pius = pus(power);//use the pus function to find the proportial pulse length in us from a percent
+  int phz = 1000000/pius;//convert to hertz
+  pticks = int((4096*phz)/1600);//convert hertz to ticks
   return pticks;
 }
 
@@ -26,15 +26,17 @@ void setup() {
   // put your setup code here, to run once:
   pwm.begin();
   pwm.setOscillatorFrequency(27000000);
-  pwm.setPWMFreq(1600);  // This is the maximum PWM frequency  
+  pwm.setPWMFreq(1000);  // This is the maximum PWM frequency  
   Wire.setClock(400000);
   
-  pwm.setPWM(4,0,conversion(0.50));//start motor at 50% power forward
-  delay(1000)
-  pwm.setPWM(4,0,4096);//stop motor
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  
+    //pwm.setPWM(4,0,conversion(.99));//start motor at 50% power forward
+    pwm.setPWM(4,0,1650);
+    delay(1000);
+    pwm.setPWM(4,4096,0);//stop motor
+    delay(1000);
 }
